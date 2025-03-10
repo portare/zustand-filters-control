@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FiltersContext } from './StoreProvider';
+import { FiltersContext } from './FiltersContext';
 import { useStore } from 'zustand';
 import { TFiltersStore } from './types';
 
@@ -10,7 +10,7 @@ export function useFilters<T>(selector?: ((store: TFiltersStore) => T) | keyof T
   const store = useContext(FiltersContext);
 
   if (!store) {
-    throw new Error('Missing store provider');
+    throw new Error('Missing filters store provider');
   }
 
   const _selector =

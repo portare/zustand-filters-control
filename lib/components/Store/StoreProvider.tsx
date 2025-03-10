@@ -1,12 +1,9 @@
 import type { TStoreProps } from './types';
 import { storeCreator } from './storeCreator';
-import { createContext, type PropsWithChildren, useRef } from 'react';
+import { memo, type PropsWithChildren, useRef } from 'react';
+import { FiltersContext, type TFiltersStoreContext } from './FiltersContext';
 
-type TFiltersStoreContext = ReturnType<typeof storeCreator>;
-
-export const FiltersContext = createContext<TFiltersStoreContext | null>(null);
-
-export const FiltersProvider = ({ children }: PropsWithChildren<TStoreProps>) => {
+export const FiltersProvider = memo(({ children }: PropsWithChildren<TStoreProps>) => {
   const storeRef = useRef<TFiltersStoreContext>();
 
   if (!storeRef.current) {
@@ -14,4 +11,4 @@ export const FiltersProvider = ({ children }: PropsWithChildren<TStoreProps>) =>
   }
 
   return <FiltersContext.Provider value={storeRef.current}>{children}</FiltersContext.Provider>;
-};
+});
