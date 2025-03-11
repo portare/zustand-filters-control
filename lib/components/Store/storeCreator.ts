@@ -2,14 +2,16 @@ import { createStore } from 'zustand/index';
 import type { TFiltersStore, TFiltersStoreState } from './types';
 import { immer } from 'zustand/middleware/immer';
 import { produce } from 'immer';
+import { isAsyncFunction } from '../../utils/types';
 
 export function storeCreator() {
   return createStore<TFiltersStore, [['zustand/immer', never]]>(
-    immer((setState) => ({
+    immer((setState, getState) => ({
       initialFilters: {},
-      appliedFilters: {},
-      tmpFilters: {},
       isFiltersLoading: false,
+      tmpFilters: {},
+      appliedFilters: {},
+      storage: null,
 
       /**
        * Initial filters
@@ -29,17 +31,26 @@ export function storeCreator() {
           isFiltersLoading: true,
         }));
 
-        loader()
-          .then((response) => {
-            setState(() => ({
-              initialFilters: response,
-            }));
-          })
-          .finally(() => {
-            setState(() => ({
-              isFiltersLoading: false,
-            }));
-          });
+        if (isAsyncFunction(loader)) {
+          loader()
+            .then((response) => {
+              setState(() => ({
+                initialFilters: response,
+              }));
+            })
+            .finally(() => {
+              setState(() => ({
+                isFiltersLoading: false,
+              }));
+            });
+        } else {
+          const data = loader();
+
+          setState(() => ({
+            initialFilters: data,
+            isFiltersLoading: false,
+          }));
+        }
       },
 
       /**
@@ -108,6 +119,34 @@ export function storeCreator() {
           tmpFilters: {},
           isFiltersLoading: false,
         }));
+      },
+
+      /**
+       * Storage
+       */
+      updateFromStorage: () => {
+        const { storage } = getState();
+
+        if (!storage) {
+          return;
+        }
+
+        const { getValues } = storage;
+
+        if (isAsyncFunction(getValues)) {
+          getValues().then((values) => {
+            setState(() => ({
+              tmpFilters: values,
+              appliedFilters: values,
+            }));
+          });
+        } else {
+          const newState = getValues();
+          setState(() => ({
+            tmpFilters: newState,
+            appliedFilters: newState,
+          }));
+        }
       },
     })),
   );

@@ -1,13 +1,20 @@
 export type TFilterValue = unknown;
 export type TFilterValues = Record<string | symbol | number, TFilterValue>;
 
-export type TFiltersLoader = () => Promise<TFilterValues>;
+export type TFiltersLoader = (() => Promise<TFilterValues>) | (() => TFilterValues);
+
+export type TStorage = {
+  setValues: ((values: TFilterValues) => Promise<void>) | ((values: TFilterValues) => void);
+  getValues: (() => Promise<TFilterValues>) | (() => TFilterValues);
+};
 
 export type TFiltersStoreState = {
   initialFilters: TFilterValues;
-  appliedFilters: TFilterValues;
-  tmpFilters: TFilterValues;
   isFiltersLoading: boolean;
+  tmpFilters: TFilterValues;
+  appliedFilters: TFilterValues;
+
+  storage: TStorage | null;
 };
 
 export type TFiltersStoreActions = {
@@ -26,6 +33,8 @@ export type TFiltersStoreActions = {
   resetAllFilters: () => void;
   resetToInitial: () => void;
   reset: () => void;
+
+  updateFromStorage: () => void;
 };
 
 export type TFiltersStore = TFiltersStoreState & TFiltersStoreActions;
