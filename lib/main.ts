@@ -1,7 +1,8 @@
-export { FiltersProvider, useFilters } from './components/Store';
+export { FiltersProvider, useFilters, storeCreator } from './components/Store';
 export type {
-  TStoreProps,
   TFiltersStore,
+  TStoreProps,
+  TFiltersStoreData,
   TFiltersLoader,
   TFilterValue,
   TFilterValues,

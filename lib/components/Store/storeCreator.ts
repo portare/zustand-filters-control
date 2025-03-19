@@ -1,11 +1,11 @@
 import { createStore } from 'zustand/index';
-import type { TFiltersStore, TFiltersStoreState } from './types';
+import type { TFiltersStore, TFiltersStoreData, TFiltersStoreState } from './types';
 import { immer } from 'zustand/middleware/immer';
 import { produce } from 'immer';
 import { isAsyncFunction } from '../../utils/types';
 
-export function storeCreator() {
-  return createStore<TFiltersStore, [['zustand/immer', never]]>(
+export function storeCreator(): TFiltersStore {
+  return createStore<TFiltersStoreData, [['zustand/immer', never]]>(
     immer((setState, getState) => ({
       initialFilters: {},
       isFiltersLoading: false,

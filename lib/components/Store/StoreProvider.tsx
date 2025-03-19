@@ -1,14 +1,17 @@
-import type { TStoreProps } from './types';
+import type { TFiltersStore, TStoreProps } from './types';
 import { storeCreator } from './storeCreator';
 import { memo, useRef } from 'react';
-import { FiltersContext, type TFiltersStoreContext } from './FiltersContext';
+import { FiltersContext } from './FiltersContext';
 
-// TODO add way to pass your store as in antd/Form
-export const FiltersProvider = memo(({ children }: TStoreProps) => {
-  const storeRef = useRef<TFiltersStoreContext>();
+export const FiltersProvider = memo(({ children, store }: TStoreProps) => {
+  const storeRef = useRef<TFiltersStore>();
 
   if (!storeRef.current) {
-    storeRef.current = storeCreator();
+    if (store) {
+      storeRef.current = store;
+    } else {
+      storeRef.current = storeCreator();
+    }
   }
 
   return <FiltersContext.Provider value={storeRef.current}>{children}</FiltersContext.Provider>;

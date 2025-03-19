@@ -1,6 +1,4 @@
 import { createContext } from 'react';
-import { storeCreator } from './storeCreator';
+import type { TFiltersStore } from './types';
 
-export type TFiltersStoreContext = ReturnType<typeof storeCreator>;
-
-export const FiltersContext = createContext<TFiltersStoreContext | null>(null);
+export const FiltersContext = createContext<TFiltersStore | null>(null);

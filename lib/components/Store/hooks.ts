@@ -1,12 +1,14 @@
 import { useContext } from 'react';
 import { FiltersContext } from './FiltersContext';
 import { useStore } from 'zustand';
-import { TFiltersStore } from './types';
+import { TFiltersStoreData } from './types';
 
-export function useFilters(): TFiltersStore;
-export function useFilters<T>(selector: (store: TFiltersStore) => T): T;
-export function useFilters<T extends keyof TFiltersStore>(key: T): TFiltersStore[T];
-export function useFilters<T>(selector?: ((store: TFiltersStore) => T) | keyof TFiltersStore) {
+export function useFilters(): TFiltersStoreData;
+export function useFilters<T>(selector: (store: TFiltersStoreData) => T): T;
+export function useFilters<T extends keyof TFiltersStoreData>(key: T): TFiltersStoreData[T];
+export function useFilters<T>(
+  selector?: ((store: TFiltersStoreData) => T) | keyof TFiltersStoreData,
+) {
   const store = useContext(FiltersContext);
 
   if (!store) {
@@ -15,7 +17,7 @@ export function useFilters<T>(selector?: ((store: TFiltersStore) => T) | keyof T
 
   const _selector =
     selector &&
-    (typeof selector === 'function' ? selector : (store: TFiltersStore) => store[selector]);
+    (typeof selector === 'function' ? selector : (store: TFiltersStoreData) => store[selector]);
 
   return useStore(store, _selector as never);
 }
