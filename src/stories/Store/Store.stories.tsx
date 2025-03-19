@@ -1,5 +1,6 @@
-import { StoreControls, StoreProvider } from './Store';
+import { StoreProvider } from './Store';
 import type { Meta, StoryObj } from '@storybook/react';
+import { BaseActions } from './BaseActions';
 
 const meta = {
   title: 'Store',
@@ -13,8 +14,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Base: Story = {
+export const Base_Actions: Story = {
   args: {
-    children: <StoreControls />,
+    children: <BaseActions />,
   },
 };

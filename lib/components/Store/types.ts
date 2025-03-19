@@ -50,8 +50,7 @@ export type TStoreCreatorOptions = {
   externalStorage: TStorage | null;
 };
 
-export type TStoreProps = PropsWithChildren<
-  {
-    store?: TFiltersStore;
-  } & TStoreCreatorOptions
->;
+export type TStoreProps = PropsWithChildren<{
+  store?: TFiltersStore;
+  externalStorage?: TStoreCreatorOptions['externalStorage'];
+}>;
