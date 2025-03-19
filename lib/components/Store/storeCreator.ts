@@ -36,6 +36,8 @@ export function storeCreator() {
             .then((response) => {
               setState(() => ({
                 initialFilters: response,
+                tmpFilters: response,
+                appliedFilters: response,
               }));
             })
             .finally(() => {
@@ -48,6 +50,8 @@ export function storeCreator() {
 
           setState(() => ({
             initialFilters: data,
+            tmpFilters: data,
+            appliedFilters: data,
             isFiltersLoading: false,
           }));
         }
@@ -91,9 +95,13 @@ export function storeCreator() {
        * Applying filters
        */
       applyFromTmp: () => {
-        setState((state) => ({
-          appliedFilters: state.tmpFilters,
-        }));
+        setState((state) => {
+          state.storage?.setValues(state.tmpFilters);
+
+          return {
+            appliedFilters: state.tmpFilters,
+          };
+        });
       },
 
       /**

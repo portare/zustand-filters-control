@@ -1,3 +1,5 @@
+import type { PropsWithChildren } from 'react';
+
 export type TFilterValue = unknown;
 export type TFilterValues = Record<string | symbol | number, TFilterValue>;
 
@@ -23,6 +25,7 @@ export type TFiltersStoreActions = {
   loadInitialFilters: (loader: TFiltersLoader) => Promise<void>;
 
   setTmpFilter: (name: string, value: TFilterValue) => void;
+  // TODO add merge option
   setTmpFilters: (values: TFilterValues) => void;
 
   setFilter: (name: string, value: TFilterValue) => void;
@@ -39,4 +42,4 @@ export type TFiltersStoreActions = {
 
 export type TFiltersStore = TFiltersStoreState & TFiltersStoreActions;
 
-export type TStoreProps = object;
+export type TStoreProps = PropsWithChildren<object>;
