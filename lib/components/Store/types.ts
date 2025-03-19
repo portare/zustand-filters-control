@@ -46,6 +46,12 @@ export type TFiltersStore = ReturnType<
   typeof createStore<TFiltersStoreData, [['zustand/immer', never]]>
 >;
 
-export type TStoreProps = PropsWithChildren<{
-  store?: TFiltersStore;
-}>;
+export type TStoreCreatorOptions = {
+  externalStorage: TStorage | null;
+};
+
+export type TStoreProps = PropsWithChildren<
+  {
+    store?: TFiltersStore;
+  } & TStoreCreatorOptions
+>;

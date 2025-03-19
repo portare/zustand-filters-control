@@ -3,14 +3,16 @@ import { storeCreator } from './storeCreator';
 import { memo, useRef } from 'react';
 import { FiltersContext } from './FiltersContext';
 
-export const FiltersProvider = memo(({ children, store }: TStoreProps) => {
+export const FiltersProvider = memo(({ children, store, externalStorage = null }: TStoreProps) => {
   const storeRef = useRef<TFiltersStore>();
 
   if (!storeRef.current) {
     if (store) {
       storeRef.current = store;
     } else {
-      storeRef.current = storeCreator();
+      storeRef.current = storeCreator({
+        externalStorage,
+      });
     }
   }
 
