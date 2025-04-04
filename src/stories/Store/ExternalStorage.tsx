@@ -1,6 +1,6 @@
 import { TFiltersLoader, useFilters } from '../../../lib/components/Store';
 
-export const BaseActions = () => {
+export const ExternalStorage = () => {
   const store = useFilters();
 
   const loadFilters: TFiltersLoader = async () => {
@@ -24,7 +24,34 @@ export const BaseActions = () => {
         gap: 16,
       }}
     >
-      <pre>{JSON.stringify(store, undefined, 4)}</pre>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 16,
+        }}
+      >
+        <div
+          style={{
+            borderRadius: 8,
+            paddingInline: 16,
+            backgroundColor: 'lightblue',
+          }}
+        >
+          <pre>external</pre>
+          <pre>{JSON.stringify(store.storage?.getValues(), undefined, 4)}</pre>
+        </div>
+        <div
+          style={{
+            borderRadius: 8,
+            paddingInline: 16,
+            backgroundColor: 'lightblue',
+          }}
+        >
+          <pre>zustand</pre>
+          <pre>{JSON.stringify(store, undefined, 4)}</pre>
+        </div>
+      </div>
       <div
         style={{
           display: 'flex',
@@ -136,6 +163,21 @@ export const BaseActions = () => {
             }}
           >
             applyFromTmp
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: 16,
+          }}
+        >
+          <button
+            onClick={() => {
+              store.updateFromStorage();
+            }}
+          >
+            updateFromStorage
           </button>
         </div>
       </div>

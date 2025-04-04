@@ -5,6 +5,6 @@ type TStoreProviderProps = TStoreProps;
 /**
  * Core filters store provider
  */
-export const StoreProvider = ({ children }: TStoreProviderProps) => {
-  return <FiltersProvider>{children}</FiltersProvider>;
+export const StoreProvider = ({ children, ...rest }: TStoreProviderProps) => {
+  return <FiltersProvider {...rest}>{children}</FiltersProvider>;
 };
