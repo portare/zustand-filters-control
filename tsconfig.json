@@ -2,6 +2,8 @@
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
+    // TODO remove and think how to resolve errors
+    { "path": "./tsconfig.lib.json" },
     { "path": "./tsconfig.node.json" }
   ]
 }

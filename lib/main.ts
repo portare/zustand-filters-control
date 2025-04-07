@@ -1,3 +1,9 @@
-export function helloAnything(thing: string): string {
-  return `Hello ${thing}!`
-}
+export { FiltersProvider, useFilters, storeCreator } from './components/Store';
+export type {
+  TFiltersStore,
+  TStoreProps,
+  TFiltersStoreData,
+  TFiltersLoader,
+  TFilterValue,
+  TFilterValues,
+} from './components/Store';
