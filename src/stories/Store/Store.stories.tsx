@@ -2,6 +2,7 @@ import { StoreProvider } from './Store';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BaseActions } from './BaseActions';
 import { ExternalStorage } from './ExternalStorage';
+import { BaseForm } from './BaseForm';
 
 const meta = {
   title: 'Store',
@@ -32,5 +33,19 @@ export const External_Storage: Story = {
       },
     },
     children: <ExternalStorage />,
+  },
+};
+
+export const Base_Form: Story = {
+  args: {
+    externalStorage: {
+      setValues: (values) => {
+        window.localStorage.setItem('form_filters', JSON.stringify(values));
+      },
+      getValues: () => {
+        return JSON.parse(window.localStorage.getItem('form_filters')) || {};
+      },
+    },
+    children: <BaseForm />,
   },
 };
